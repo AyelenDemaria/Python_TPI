@@ -1,0 +1,32 @@
+
+{% block title %}<h2>Instalaciones </h2>{% endblock %}
+
+
+<div id="wrapper" class="fade-in">
+
+  <!-- Main -->
+  <div id="main">
+
+    <section class="post">
+        {% for instalacion in instalaciones %}
+          <header class="major">
+            <h1>
+               {{ instalacion.nom_instalacion }}
+            </h1>
+          </header>
+
+
+          <p>{{ instalacion.desc_instalacion|linebreaksbr }}</p>
+          <p><i class="far fa-clock"></i> {{instalacion.importe}}</p>
+          <img src="{{MEDIA_URL}}{{instalacion.foto}}" height="100px" />
+          <hr>
+          {% empty %}
+            <li>Estamos trabajando en esta página.</li>
+        {% endfor %}
+
+    </section>
+
+  </div>
+
+
+</div>
