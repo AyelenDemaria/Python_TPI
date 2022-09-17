@@ -19,7 +19,9 @@
           <p>{{ instalacion.desc_instalacion|linebreaksbr }}</p>
           <p><i class="far fa-clock"></i> {{instalacion.importe}}</p>
           <img src="{{MEDIA_URL}}{{instalacion.foto}}" height="100px" />
+          <p><button class="btn btn-primary" type="submit">Reservar</button></p>
           <hr>
+
           {% empty %}
             <li>Estamos trabajando en esta página.</li>
         {% endfor %}

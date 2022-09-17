@@ -3,23 +3,39 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-from usuarios.models import Usuario
+from .forms import NewUserForm
+from django.contrib import messages
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm
+#from usuarios.models import Usuario
 from . import views
+from instalaciones.models import Instalacion
+from templates import instalaciones,registration
 
 # Create your views here.
 def index(request):
-    return render(request, 'instalacion_list.html')
+    instalaciones = Instalacion.objects.order_by('importe')
+    return render(request, 'instalaciones/instalacion_list.html',{'instalaciones':instalaciones})
+
 
 def login_template(request,error=False):
-    return render(request,'login.html',context={'error':error})
+    return render(request,'registration/login.html',context={'error':error})
+
 
 
 def login_view(request):
-    email = request.POST['email']
-    contreaseña = request.POST['contraseña']
-    user = authenticate(request, email=email, contraseña=contraseña)
-    if user is not None:
-        login(request,user)
-        return redirect(reverse(views.index))
-    else:
-        return login_template(request,True)
+    if request.method == "POST":
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request,user)
+                return redirect('/')
+            else:
+                messages.error(request, "Invalido username o clave")
+        else:
+            messages.error(request, "Invalido username o password")
+    form = AuthenticationForm()
+    return render (request=request, template_name="registration/login.html",context={"login_form":form})
