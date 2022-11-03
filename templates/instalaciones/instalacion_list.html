@@ -1,7 +1,12 @@
+{% extends '../base.html' %}
 
-{% block title %}<h2>Instalaciones </h2>{% endblock %}
+{% load static %}
 
+{% load bootstrap5 %}
 
+{% block title %}Instalaciones{% endblock %}
+
+{% block content %}
 <div id="wrapper" class="fade-in">
 
   <!-- Main -->
@@ -17,9 +22,12 @@
 
 
           <p>{{ instalacion.desc_instalacion|linebreaksbr }}</p>
-          <p><i class="far fa-clock"></i> {{instalacion.importe}}</p>
-          <img src="{{MEDIA_URL}}{{instalacion.foto}}" height="100px" />
-          <p><button class="btn btn-primary" type="submit">Reservar</button></p>
+          <p><i class="far fa-clock"></i> Importe: $ {{instalacion.importe}}</p>
+          <img src="{{ MEDIA_URL }}/{{ instalacion.foto }}" height="250px" />
+          <br>
+          <br>
+          <p><a href="{% url 'nueva_reserva' pk=instalacion.pk %}" class="btn btn-primary">Reservar</a></p>
+
           <hr>
 
           {% empty %}
@@ -32,3 +40,4 @@
 
 
 </div>
+{% endblock %}

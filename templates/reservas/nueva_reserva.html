@@ -1,0 +1,29 @@
+{% extends '../base.html' %}
+
+{% load static %}
+
+{% load bootstrap5 %}
+
+{% block title %}Nueva Reserva{% endblock %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+<div class="container py-5">
+  <h1>Nueva reserva</h1>
+  <form method="POST">
+    {% csrf_token %}
+
+    {{ nueva_reserva|crispy }}
+
+    <button class="btn btn-primary" type="submit">Reservar</button>
+    
+
+
+  </form>
+
+
+</div>
+
+{% endblock %}

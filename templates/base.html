@@ -3,33 +3,28 @@
 <html lang="es">
 
 <head>
+    <a href="{% url 'instalacion_list' %}" class="button">Inicio</a>
+    <a href="{% url 'mis_reservas'  %}" class="button">Mis reservas</a>
     <meta charset="UTF-8">
-    <title>{% block title %}{% endblock %}</title>
+    <title>{% block title %}Home{% endblock %}</title>
 
-    <!-- Font Awesome -->
-    <link href="{% static 'fontawesome/css/all.css' %}" rel="stylesheet">
-    <link href="{% static 'fontawesome/scss/fontawesome.scss' %}" rel="stylesheet">
+    {# Load the tag library #}
+    {% load bootstrap5 %}
 
-    <!-- Material Design for Bootstrap -->
-    <link href="{% static 'mdbootstrap/css/mdb.min.css' %}" rel="stylesheet">
-    <link href="{% static 'mdbootstrap/css/mdb.rtl.min.css' %}" rel="stylesheet">
-    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    {# Load CSS and JavaScript #}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+
+    {# Display django.contrib.messages as Bootstrap alerts #}
+    {% bootstrap_messages %}
 </head>
 
 <body style="background-color: #FAFAFA;">
-    
     <br>
     <div class="container">
         {% block content %} {% endblock %}
         <br>
     </div>
-    <!-- Font Awesome -->
-    <script src="{% static 'fontawesome/js/all.js' %}"></script>
-    <script src="{% static 'fontawesome/less/fontawesome.less' %}"></script>
-    <!-- Material Design for Bootstrap -->
-    <script src="{% static 'mdbootstrap/js/mdb.min.js' %}"></script>
-    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
-
 </body>
 
 </html>

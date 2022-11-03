@@ -1,0 +1,56 @@
+
+{% extends '../base.html' %}
+
+{% load static %}
+
+{% load bootstrap5 %}
+
+{% block title %}Mis Reservas{% endblock %}
+
+{% block content %}
+
+<div id="wrapper" class="fade-in">
+
+  <!-- Main -->
+  <div id="main">
+  <h1>Mis Reservas</h1>
+  {% if mis_reservas %}
+  <table>
+    
+    <tbody>
+      <tr>
+        <th>Instalacion</th>
+        <th>Fecha reserva</th>
+        <th>Fecha hora desde</th>
+        <th>Fecha hora hasta</th>
+        <th>Fecha cancelacion</th>
+        <th>Importe</th>
+      </tr>
+
+      <section class="post">
+          {% for reserva in mis_reservas %}
+
+            <tr>
+              <td>{{ reserva.instalacion.nom_instalacion}}</td>
+              <td>{{reserva.fecha_reserva}}</td>
+              <td>{{reserva.fecha_hora_desde}}</td>
+              <td>{{reserva.fecha_hora_hasta}}</td>
+              <td>{% if reserva.fecha_cancelacion %}{{reserva.fecha_cancelacion}}{% endif %}</td>
+              <td>{{reserva.instalacion.importe}}</td>
+              <td><img src="{{ MEDIA_URL }}/{{ reserva.instalacion.foto }}" height="90px" /></td>
+              <td>{% if not reserva.fecha_cancelacion %}<a href="{% url 'cancelar_reserva' pk=reserva.pk %}" class="button">Cancelar</a>{% endif %}</td>
+            </tr>
+          {% endfor %}
+
+
+      </section>
+    </tbody>
+
+  </table>
+  {% endif %}
+
+  </div>
+
+</div>
+
+{% endblock %}

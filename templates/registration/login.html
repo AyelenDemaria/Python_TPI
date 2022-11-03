@@ -1,10 +1,14 @@
-<!DOCTYPE html>
+{% extends '../base.html' %}
+
 {% load static %}
+
+{% load bootstrap5 %}
+
+{% block title %}Login{% endblock %}
+
 {% block content %}
 
 {% load crispy_forms_tags %}
-
-
 
 <!--Login-->
 <div class="container py-5">
@@ -12,16 +16,7 @@
   <form method="POST">
     {% csrf_token %}
     {{ login_form|crispy }}
-    <button class="btn btn-primary" type="submit">Login</button>
-    {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                <li class="{{ message.tags }}"><div class="alert alert-danger">{{ message }}</div></li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-
-
+    <button class="btn btn-primary" type="submit">Login</button>   
   </form>
 
   <p class="text-center">Don't have an account? <a href="/register">Create an account</a>.</p>
