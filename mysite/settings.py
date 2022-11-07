@@ -29,7 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['127.0.0.1']
 PAYMENT_HOST = 'localhost:8000'
 PAYMENT_USES_SSL = False
-PAYMENT_MODEL = 'pagos.models.Payment'
+PAYMENT_MODEL = 'pagos.Pago'
 
 # Application definition
 

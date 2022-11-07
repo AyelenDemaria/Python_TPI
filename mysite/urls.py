@@ -28,4 +28,5 @@ urlpatterns = [
     path('reservas/', include('reservas.urls')),
     path('cuotas/', include('cuotas.urls')),
     path('payments/', include('payments.urls')),
+    path('pagos/', include('pagos.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

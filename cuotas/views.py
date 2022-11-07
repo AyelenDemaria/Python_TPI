@@ -36,16 +36,16 @@ def pagar_cuota(request,pk):
         currency='ARS',
         delivery=Decimal(10),
         billing_first_name= request.user.first_name,
-        billing_last_name= request.user.first_name,
+        billing_last_name= request.user.last_name,
         billing_address_1='',
         billing_address_2='',
         billing_city='San Jose de la Esquina',
         billing_postcode='2185',
-        billing_country_code='ARG',
+        billing_country_code='AR',
         billing_country_area='Argentina',
         customer_ip_address='127.0.0.1',
     )
     cuota = get_object_or_404(Cuota, pk=pk)
     cuota.fecha_pago = timezone.now()
     cuota.save()
-    return redirect('cuotas/')
+    return redirect(reverse(views.mis_cuotas))
