@@ -27,7 +27,9 @@ SECRET_KEY = 'django-insecure-b0xyo-!f3^+c0_$-)gen7rz6(ey)=zvqdk^+y)*75c0o6c3(q7
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1']
-
+PAYMENT_HOST = 'localhost:8000'
+PAYMENT_USES_SSL = False
+PAYMENT_MODEL = 'pagos.models.Payment'
 
 # Application definition
 
@@ -40,12 +42,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'bootstrap5',
-    'bootstrap_datepicker_plus',    
+    'bootstrap_datepicker_plus',
     #nuestras apps:
     'instalaciones',
     'cuotas',
     'reservas',
     'usuarios',
+    'payments',
+    'pagos',
 
 ]
 
@@ -116,6 +120,17 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+PAYMENT_VARIANTS = {
+    "mercadopago": (
+        "payments.mercadopago.MercadoPagoProvider",
+        {
+            "access_token": "TEST-2090359435846103-110508-dcfe6bcda02a3d1e8d7b217986c93a7b-419345840",
+            "sandbox": DEBUG,
+        },
+    ),
+}
+
+CHECKOUT_PAYMENT_CHOICES = [('MercadoPago', 'Mercado Pago')]
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/

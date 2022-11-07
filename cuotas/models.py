@@ -9,7 +9,7 @@ from usuarios.models import Perfil
 class Cuota(models.Model):
     mes = models.IntegerField(default=0, null=False)
     anio =  models.IntegerField(default=0, null=False)
-    fecha_pago = models.DateTimeField(default=timezone.now)
+    fecha_pago = models.DateTimeField(null=True, blank=True)
     importe = models.DecimalField(max_digits=5, decimal_places=2)
     #usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     perfil= models.ForeignKey(Perfil, on_delete=models.SET_NULL, null=True)

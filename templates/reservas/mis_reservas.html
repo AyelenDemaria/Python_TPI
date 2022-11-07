@@ -8,7 +8,10 @@
 {% block title %}Mis Reservas{% endblock %}
 
 {% block content %}
-
+      <a href="{% url 'instalacion_list' %}" class="button">Inicio</a>
+      <a href="{% url 'mis_reservas'  %}" class="button">Mis reservas</a>
+      <a href="{% url 'mis_cuotas'  %}" class="button">Mis cuotas</a>
+      <a href="{% url 'login'  %}" class="button">Cerrar sesión</a>s
 <div id="wrapper" class="fade-in">
 
   <!-- Main -->
@@ -16,7 +19,7 @@
   <h1>Mis Reservas</h1>
   {% if mis_reservas %}
   <table>
-    
+
     <tbody>
       <tr>
         <th>Instalacion</th>

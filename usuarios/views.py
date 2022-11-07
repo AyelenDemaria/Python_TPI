@@ -39,3 +39,8 @@ def login_view(request):
             messages.error(request, "Invalido username o password")
     form = AuthenticationForm()
     return render (request=request, template_name="registration/login.html",context={"login_form":form})
+
+@login_required
+def logout_view(request):
+    logout(request)
+    return redirect(reverse(views.login_view))
