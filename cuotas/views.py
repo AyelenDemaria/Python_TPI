@@ -30,18 +30,22 @@ def pagar_cuota(request,pk):
     Payment = get_payment_model()
     payment = Payment.objects.create(
         variant='default',  # this is the variant from PAYMENT_VARIANTS
-        description='Book purchase',
+        description='cuota',
         total=Decimal(120),
         tax=Decimal(20),
-        currency='USD',
+        currency='ARS',
         delivery=Decimal(10),
-        billing_first_name='Sherlock',
-        billing_last_name='Holmes',
-        billing_address_1='221B Baker Street',
+        billing_first_name= request.user.first_name,
+        billing_last_name= request.user.first_name,
+        billing_address_1='',
         billing_address_2='',
-        billing_city='London',
-        billing_postcode='NW1 6XE',
-        billing_country_code='GB',
-        billing_country_area='Greater London',
+        billing_city='San Jose de la Esquina',
+        billing_postcode='2185',
+        billing_country_code='ARG',
+        billing_country_area='Argentina',
         customer_ip_address='127.0.0.1',
     )
+    cuota = get_object_or_404(Cuota, pk=pk)
+    cuota.fecha_pago = timezone.now()
+    cuota.save()
+    return redirect('cuotas/')
