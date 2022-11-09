@@ -36,7 +36,7 @@
               <td>{{ cuota.anio }}</td>
               <td>{{ cuota.importe }}</td>
               <td>{% if cuota.fecha_pago %}{{ cuota.fecha_pago }}{% else %}Pendiente de Pago{% endif %}</td>
-              <td>{% if not cuota.fecha_pago %}<a href="{% url 'pagar_cuota' pk=cuota.pk %}" class="button">Pagar</a>{% endif %}</td>
+              <td>{% if not cuota.fecha_pago %}<a href="{% url 'payment_details' %}" class="button">Pagar</a>{% endif %}</td>
             </tr>
           {% endfor %}
 

@@ -29,7 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['127.0.0.1']
 PAYMENT_HOST = 'localhost:8000'
 PAYMENT_USES_SSL = False
-PAYMENT_MODEL = 'pagos.Pago'
+PAYMENT_MODEL = 'pagos.models.Payment'
 
 # Application definition
 
@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'cuotas',
     'reservas',
     'usuarios',
-    'payments',
+    'payments_mercadopago',
     'pagos',
 
 ]
@@ -125,7 +125,7 @@ PAYMENT_VARIANTS = {
         "payments.mercadopago.MercadoPagoProvider",
         {
             "access_token": "TEST-2090359435846103-110508-dcfe6bcda02a3d1e8d7b217986c93a7b-419345840",
-            "sandbox": DEBUG,
+            "sandbox_mode": True,
         },
     ),
 }
