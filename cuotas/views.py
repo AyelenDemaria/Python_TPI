@@ -21,7 +21,6 @@ meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto
 @login_required
 def mis_cuotas(request):
     mis_cuotas = Cuota.objects.filter(perfil__user=request.user)
-
     if not mis_cuotas:
         messages.info(request, "No cuentas con cuotas generadas")
 
@@ -50,11 +49,13 @@ def reporte_pagos(request):
     return render(request, 'cuotas/reporte_pagos.html', {'resultado': resultado, 'anio_actual': anio_actual})
 
 def reporte_morosos(request):
+    anio_actual = datetime.today().year
+    mes_actual = datetime.today().month
     socios = Perfil.objects.all()
     resultado = []
     for i in socios:
         sum = 0
-        cuotas_pendientes = Cuota.objects.filter(perfil_id = i.id, fecha_pago__isnull=True)
+        cuotas_pendientes = Cuota.objects.filter(perfil_id = i.id, fecha_pago__isnull=True, anio = anio_actual, mes__lt = mes_actual)
         #si tiene algo pendiente sumo sino no me importa porque es de los morosos
         if cuotas_pendientes:
             for j in cuotas_pendientes:

@@ -20,7 +20,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 from adminplus.sites import AdminSitePlus
 
+
 admin.site = AdminSitePlus()
+admin.sites.site = admin.site
 admin.autodiscover()
 
 urlpatterns = [
