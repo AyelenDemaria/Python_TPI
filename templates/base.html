@@ -4,7 +4,7 @@
 
 <head>
 
-    
+
     <meta charset="UTF-8">
     <title>{% block title %}Home{% endblock %}</title>
 
@@ -15,11 +15,13 @@
     {% bootstrap_css %}
     {% bootstrap_javascript %}
 
-    {# Display django.contrib.messages as Bootstrap alerts #}
-    {% bootstrap_messages %}
 </head>
 
 <body style="background-color: #FAFAFA;">
+  {% if not login_form and not resultado %}{% block nav %}{% include 'navbar.html' %}{% endblock nav %}{% endif %}
+
+  {# Display django.contrib.messages as Bootstrap alerts #}
+  {% bootstrap_messages %}
     <br>
     <div class="container">
         {% block content %} {% endblock %}

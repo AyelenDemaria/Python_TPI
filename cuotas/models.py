@@ -16,4 +16,4 @@ class Cuota(models.Model):
 
     def __str__(self):
 
-        return str(self.mes) + '  -  ' + str(self.anio)
+        return str(self.mes) + '  -  ' + str(self.anio) + ' - ' + str(self.perfil.user.username) + ' - ' + str(self.perfil.documento)

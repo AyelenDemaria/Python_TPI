@@ -18,6 +18,10 @@ from django.urls import path, include
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
+from adminplus.sites import AdminSitePlus
+
+admin.site = AdminSitePlus()
+admin.autodiscover()
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,6 +31,5 @@ urlpatterns = [
     path('reservar/', include('reservas.urls')),
     path('reservas/', include('reservas.urls')),
     path('cuotas/', include('cuotas.urls')),
-    path('payments/', include('payments.urls')),
-    path('pagos/', include('pagos.urls')),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

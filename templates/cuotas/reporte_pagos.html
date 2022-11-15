@@ -1,0 +1,48 @@
+{% extends '../base.html' %}
+
+{% load static %}
+
+{% load bootstrap5 %}
+
+{% block title %}Reporte Pagos{% endblock %}
+
+{% block content %}
+<div id="wrapper" class="fade-in">
+  <!-- Main -->
+  <div id="main">
+    <h1>Reporte Pagos</h1>
+    <h3>Año: {{ anio_actual }}</h3>
+
+    <table class="table table-striped">
+     <thead>
+
+        <tr>
+          <th>Mes</th>
+          <th>A cobrar</th>
+          <th>Cobrado</th>
+          <th>Pendiente</th>
+        </tr>
+        </thead>
+        <tbody>
+        <section class="post">
+            {% for r in resultado %}
+              <tr>
+                <td>{{ r.0 }}</td>
+                <td>$ {{ r.1 }}</td>
+                <td>$ {{ r.2 }}</td>
+                <td>$ {{ r.3 }}</td>
+              </tr>
+            {% endfor %}
+
+
+        </section>
+      </tbody>
+
+    </table>
+
+    </div>
+    <a href="http://127.0.0.1:8000/admin/" type="button" class="btn btn-primary">Volver</a>
+
+</div>
+
+{% endblock %}

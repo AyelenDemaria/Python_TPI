@@ -8,28 +8,25 @@
 {% block title %}Mis Reservas{% endblock %}
 
 {% block content %}
-      <a href="{% url 'instalacion_list' %}" class="button">Inicio</a>
-      <a href="{% url 'mis_reservas'  %}" class="button">Mis reservas</a>
-      <a href="{% url 'mis_cuotas'  %}" class="button">Mis cuotas</a>
-      <a href="{% url 'login'  %}" class="button">Cerrar sesión</a>s
 <div id="wrapper" class="fade-in">
 
   <!-- Main -->
   <div id="main">
   <h1>Mis Reservas</h1>
   {% if mis_reservas %}
-  <table>
+  <table class="table table-striped">
 
-    <tbody>
+  <thead>
       <tr>
         <th>Instalacion</th>
         <th>Fecha reserva</th>
         <th>Fecha hora desde</th>
         <th>Fecha hora hasta</th>
         <th>Fecha cancelacion</th>
-        <th>Importe</th>
-      </tr>
 
+      </tr>
+      </thead>
+      <tbody>
       <section class="post">
           {% for reserva in mis_reservas %}
 
@@ -39,7 +36,6 @@
               <td>{{reserva.fecha_hora_desde}}</td>
               <td>{{reserva.fecha_hora_hasta}}</td>
               <td>{% if reserva.fecha_cancelacion %}{{reserva.fecha_cancelacion}}{% endif %}</td>
-              <td>{{reserva.instalacion.importe}}</td>
               <td><img src="{{ MEDIA_URL }}/{{ reserva.instalacion.foto }}" height="90px" /></td>
               <td>{% if not reserva.fecha_cancelacion %}<a href="{% url 'cancelar_reserva' pk=reserva.pk %}" class="button">Cancelar</a>{% endif %}</td>
             </tr>

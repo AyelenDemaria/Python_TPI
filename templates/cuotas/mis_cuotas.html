@@ -7,27 +7,25 @@
 {% block title %}Mis Cuotas{% endblock %}
 
 {% block content %}
-      <a href="{% url 'instalacion_list' %}" class="button">Inicio</a>
-      <a href="{% url 'mis_reservas'  %}" class="button">Mis reservas</a>
-      <a href="{% url 'mis_cuotas'  %}" class="button">Mis cuotas</a>
-      <a href="{% url 'login'  %}" class="button">Cerrar sesión</a>
-<div id="wrapper" class="fade-in">
 
+<div id="wrapper" class="fade-in">
 
   <!-- Main -->
   <div id="main">
   <h1>Mis Cuotas</h1>
-  {% if mis_cuotas %}
-  <table>
 
-    <tbody>
+  {% if mis_cuotas %}
+  <table class="table table-striped">
+   <thead>
+
       <tr>
         <th>Mes</th>
         <th>Anio</th>
         <th>Importe</th>
         <th>Fecha pago</th>
       </tr>
-
+      </thead>
+      <tbody>
       <section class="post">
           {% for cuota in mis_cuotas %}
 
@@ -36,7 +34,7 @@
               <td>{{ cuota.anio }}</td>
               <td>{{ cuota.importe }}</td>
               <td>{% if cuota.fecha_pago %}{{ cuota.fecha_pago }}{% else %}Pendiente de Pago{% endif %}</td>
-              <td>{% if not cuota.fecha_pago %}<a href="{% url 'pagar_cuota' pk=cuota.pk %}" class="button">Pagar</a>{% endif %}</td>
+              <td>{% if not cuota.fecha_pago %}<a href="https://mpago.la/2U1DNmU" class="button">Ir a pagar</a>{% endif %}</td>
             </tr>
           {% endfor %}
 

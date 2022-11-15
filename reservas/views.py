@@ -6,6 +6,7 @@ from django.contrib import messages
 from . import views
 from instalaciones.models import Instalacion
 from usuarios.models import Perfil
+from cuotas.models import Cuota
 from .models import Reserva
 from django.contrib.auth.models import User
 from templates import instalaciones, reservas
@@ -38,40 +39,56 @@ def nueva_reserva(request,pk):
             #fhd = datetime.strptime(fecha_hora_d, "%Y-%m-%d %H:%M:%S")
             #fhh = datetime.strptime(fecha_hora_h, "Y-%m-%d %H:%M:%S")
             #datetime.strptime(fecha_hora_h, '%Y-%m-%d %H:%M:%S')
-            inst_reservadas = Reserva.objects.filter(
+            #date = datetime.now()
+            year = datetime.today().year
+            print('año actual:',year)
+            month = datetime.today().month
+            print('mes actual:',month)
+            id_user = User.objects.get(username = request.user)
+            perfil = Perfil.objects.get(user_id=id_user)
+            print('id:',perfil.id)
+            cuotas_debe = Cuota.objects.filter(
+                                              Q(mes__lt = month),
+                                              anio = year,
+                                              fecha_pago__isnull = True,
+                                              perfil_id = perfil.id)
+            if not cuotas_debe:
+                inst_reservadas = Reserva.objects.filter(
+                                                        Q(fecha_hora_desde__lte = fhd, fecha_hora_hasta__gte = fhh)
+                                                        |
+                                                        Q(fecha_hora_desde__range=(fhd, fhh))
+                                                        |
+                                                        Q(fecha_hora_hasta__gt = fhd, fecha_hora_hasta__lte = fhh),
+                                                        #fecha_hora_desde <= fhd
+                                                        #and fecha_hora_hasta >= fhh
+                                                        #or fecha_hora_desde >= fhd
+                                                        #and fecha_hora_desde < fhh
+                                                        #or fecha_hora_hasta > fhd
+                                                        #and fecha_hora_hasta <= fhh,
+                                                        instalacion_id=pk,fecha_cancelacion__isnull=True)
+                if not inst_reservadas:
+
+                    mis_res = Reserva.objects.filter(
                                                     Q(fecha_hora_desde__lte = fhd, fecha_hora_hasta__gte = fhh)
                                                     |
                                                     Q(fecha_hora_desde__range=(fhd, fhh))
                                                     |
                                                     Q(fecha_hora_hasta__gt = fhd, fecha_hora_hasta__lte = fhh),
-                                                    #fecha_hora_desde <= fhd
-                                                    #and fecha_hora_hasta >= fhh
-                                                    #or fecha_hora_desde >= fhd
-                                                    #and fecha_hora_desde < fhh
-                                                    #or fecha_hora_hasta > fhd
-                                                    #and fecha_hora_hasta <= fhh,
-                                                    instalacion_id=pk,fecha_cancelacion__isnull=True)
-            if not inst_reservadas:
-                id_user = User.objects.get(username = request.user)
-                perfil = Perfil.objects.get(user_id=id_user)
-                mis_res = Reserva.objects.filter(
-                                                Q(fecha_hora_desde__lte = fhd, fecha_hora_hasta__gte = fhh)
-                                                |
-                                                Q(fecha_hora_desde__range=(fhd, fhh))
-                                                |
-                                                Q(fecha_hora_hasta__gt = fhd, fecha_hora_hasta__lte = fhh),
-                                                perfil_id=perfil.id,fecha_cancelacion__isnull=True)
-                if not mis_res:
-                    reserva = form.save(commit=False)
-                    reserva.fecha_reserva = timezone.now()
-                    reserva.instalacion= inst
-                    reserva.perfil = perfil
-                    reserva.save()
-                    return redirect('/')
+                                                    perfil_id=perfil.id,fecha_cancelacion__isnull=True)
+                    if not mis_res:
+                        reserva = form.save(commit=False)
+                        reserva.fecha_reserva = timezone.now()
+                        reserva.instalacion= inst
+                        reserva.perfil = perfil
+                        reserva.save()
+                        messages.success(request, "Reserva guardada con éxito")
+                        return redirect(reverse(views.mis_reservas))
+                    else:
+                        messages.error(request, "Ya cuentas con una reserva para el periodo seleccionado")
                 else:
-                    messages.error(request, "Ya cuentas con una reserva para el periodo seleccionado")
+                    messages.error(request, "Ya existe una reserva para dicha instalacion en el periodo seleccionado")
             else:
-                messages.error(request, "Ya existe una reserva para dicha instalacion en el periodo seleccionado")
+                messages.error(request, "Debes tener la cuota al día para reservar")
     form = NuevaReserva()
     return render (request=request, template_name="reservas/nueva_reserva.html",context={"nueva_reserva":form})
 
