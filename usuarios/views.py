@@ -14,7 +14,7 @@ from templates import instalaciones,registration
 
 # Create your views here.
 def index(request):
-    instalaciones = Instalacion.objects.order_by('importe')
+    instalaciones = Instalacion.objects.all()
     return render(request, 'instalaciones/instalacion_list.html',{'instalaciones':instalaciones})
 
 

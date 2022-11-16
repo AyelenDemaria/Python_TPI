@@ -17,36 +17,23 @@ from django.db.models import Q
 from django.utils import timezone
 
 def index(request):
-    instalaciones = Instalacion.objects.order_by('importe')
+    instalaciones = Instalacion.objects.all()
     return render(request, 'instalaciones/instalacion_list.html',{'instalaciones':instalaciones})
 
 @login_required
 def nueva_reserva(request,pk):
     inst = get_object_or_404(Instalacion, pk=pk)
     if request.method == "POST":
-        #form = NuevaReserva(request.POST, instance=inst)
+
         form = NuevaReserva(request.POST)
         if form.is_valid():
 
             fhd = form.cleaned_data.get('fecha_hora_desde')
-            print('FF:', fhd)
-
             fhh = form.cleaned_data.get('fecha_hora_hasta')
-            print('FH:',fhh)
-            #datetime.strptime(fecha_hora_d, '%Y-%m-%d %H:%M:%S')
-            #fhd = fecha_hora_d.strftime('%Y-%m-%d %H:%M:%S')
-            #fhh = fecha_hora_h.strftime('%Y-%m-%d %H:%M:%S')
-            #fhd = datetime.strptime(fecha_hora_d, "%Y-%m-%d %H:%M:%S")
-            #fhh = datetime.strptime(fecha_hora_h, "Y-%m-%d %H:%M:%S")
-            #datetime.strptime(fecha_hora_h, '%Y-%m-%d %H:%M:%S')
-            #date = datetime.now()
             year = datetime.today().year
-            print('año actual:',year)
             month = datetime.today().month
-            print('mes actual:',month)
             id_user = User.objects.get(username = request.user)
             perfil = Perfil.objects.get(user_id=id_user)
-            print('id:',perfil.id)
             cuotas_debe = Cuota.objects.filter(
                                               Q(mes__lt = month),
                                               anio = year,
@@ -59,12 +46,6 @@ def nueva_reserva(request,pk):
                                                         Q(fecha_hora_desde__range=(fhd, fhh))
                                                         |
                                                         Q(fecha_hora_hasta__gt = fhd, fecha_hora_hasta__lte = fhh),
-                                                        #fecha_hora_desde <= fhd
-                                                        #and fecha_hora_hasta >= fhh
-                                                        #or fecha_hora_desde >= fhd
-                                                        #and fecha_hora_desde < fhh
-                                                        #or fecha_hora_hasta > fhd
-                                                        #and fecha_hora_hasta <= fhh,
                                                         instalacion_id=pk,fecha_cancelacion__isnull=True)
                 if not inst_reservadas:
 

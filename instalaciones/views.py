@@ -5,5 +5,5 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def instalacion_list(request):
-    instalaciones = Instalacion.objects.order_by('importe')
+    instalaciones = Instalacion.objects.all()
     return render(request, 'instalaciones/instalacion_list.html', {'instalaciones':instalaciones})

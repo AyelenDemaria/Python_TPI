@@ -13,8 +13,8 @@
     <h1>Reporte Pagos</h1>
     <h3>Año: {{ anio_actual }}</h3>
 
-    <table class="table table-striped">
-     <thead>
+    <table class="table table-striped" >
+     <thead align="center">
 
         <tr>
           <th>Mes</th>
@@ -27,10 +27,10 @@
         <section class="post">
             {% for r in resultado %}
               <tr>
-                <td>{{ r.0 }}</td>
-                <td>$ {{ r.1 }}</td>
-                <td>$ {{ r.2 }}</td>
-                <td>$ {{ r.3 }}</td>
+                <td align="center">{{ r.0 }}</td>
+                <td align="center">$ {{ r.1 }}</td>
+                <td align="center">$ {{ r.2 }}</td>
+                <td align="center" style="background-color: red">$ {{ r.3 }}</td>
               </tr>
             {% endfor %}
 
